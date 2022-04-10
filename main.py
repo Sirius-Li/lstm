@@ -170,7 +170,6 @@ def reverse(self, a):
 if __name__ == '__main__':
     #TODO
     dr = DataSet()
-<<<<<<< HEAD
     dr.InitTrainDate(num_feature=64)
     input_size = 1
     hidden_size = 64
@@ -178,14 +177,5 @@ if __name__ == '__main__':
 
     n = Net(dr, input_size, hidden_size, output_size, times=dr.num_feature, bias=True)
     n.train(batch_size=1, checkpoint=0.4, eta=0.01)
-=======
-    dr.InitTrainDate()
-    count = dr.num_train
-    input_size = 4
-    hidden_size = dr.num_feature
-    output_size = 1
 
-    n = Net(dr, input_size, hidden_size, output_size, bias=True)
-    n.train(batch_size=16, checkpoint=0.1, eta=0.01)
->>>>>>> parent of c177e30 (1st)
     # n.test()
