@@ -122,20 +122,28 @@ class Net(object):
                 break
 
     def check_loss(self, X, Y):
-        # self.forward(X)
-        result = np.zeros(Y.shape)
-        # print(Y.shape)
-        for i in range(X.shape[0]):
-            self.forward(X[i].reshape(1, -1))
-            for j in range(Y.shape[1]):
-                result[i, j] = self.linearcell[j].a
+        # # self.forward(X)
+        # result = np.zeros(Y.shape)
+        # # print(Y.shape)
+        # for i in range(X.shape[0]):
+        #     self.forward(X[i].reshape(1, -1))
+        #     for j in range(Y.shape[1]):
+        #         result[i, j] = self.linearcell[j].a
 
+
+        t_batch_size = self.batch_size
+        self.batch_size = X.shape[0]
+        self.forward(X)
+        self.batch_size = t_batch_size
+        result = self.linearcell[0].a
+        for i in range(Y.shape[1] - 1):
+            np.append(result, self.linearcell[i+1].a, axis=1)
 
         loss_list = np.zeros(Y.shape)
         acc_list = np.zeros(Y.shape)
         for i in range(self.times):
-            # loss_list[:, i], acc_list[:, i] = self.loss_fun.CheckLoss(self.linearcell[i].a, Y[:, i:(i + 1)])
-            loss_list[:, i], acc_list[:, i] = self.loss_fun.CheckLoss(result[:, i:(i+1)], Y[:, i:(i + 1)])
+            loss_list[:, i], acc_list[:, i] = self.loss_fun.CheckLoss(self.linearcell[i].a, Y[:, i:(i + 1)])
+            # loss_list[:, i], acc_list[:, i] = self.loss_fun.CheckLoss(result[:, i:(i+1)], Y[:, i:(i + 1)])
             # print(np.concatenate((self.linearcell[i].a, Y[:, i:(i + 1)]), axis=1))
 
         loss = np.mean(loss_list)
@@ -176,6 +184,6 @@ if __name__ == '__main__':
     output_size = 1
 
     n = Net(dr, input_size, hidden_size, output_size, times=dr.num_feature, bias=True)
-    n.train(batch_size=1, checkpoint=0.4, eta=0.01)
+    n.train(batch_size=8, checkpoint=0.1, eta=0.001)
 
     # n.test()

@@ -1,4 +1,5 @@
 import numpy as np
+# from keras.datasets import imdb
 import matplotlib.pyplot as plt
 
 class DataSet(object):
@@ -16,10 +17,13 @@ class DataSet(object):
         self.YDev = None  # validation feature set
 
     def InitTrainDate(self, num_feature = 128, validation_rate = 0.1):
+        # (self.train_data, self.train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
+
+
         T = 10000
         time = np.arange(1, T+1, dtype=np.float)
-        train_sin = np.sin(np.pi * time / 4)
-        train_cos = np.cos(np.pi * time / 4)
+        train_sin = np.sin(np.pi * time / 8)
+        train_cos = np.cos(np.pi * time / 8)
 
         # plt.plot(train_sin, train_cos, 'sin', 'cos')
         # plt.show()

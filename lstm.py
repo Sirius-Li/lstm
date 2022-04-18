@@ -14,8 +14,9 @@ class Tanh(object):
 class LossFunction(object):
     def CheckLoss(self, Predict, Y):
         # 平方和
-        # print(np.concatenate((A, Y), axis=1))
+        # print(np.concatenate((Predict, Y), axis=1))
         # print(Predict.shape)
+        # print(Y.shape)
         count = Predict.size
         sub = Predict - Y
         LOSS = sub * sub
