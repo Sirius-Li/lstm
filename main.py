@@ -25,8 +25,8 @@ class Net(object):
 
 
     def forward(self, X):
-        hp = np.zeros((1, self.hidden_size))
-        cp = np.zeros((1, self.hidden_size))
+        hp = np.zeros((self.batch_size, self.hidden_size))
+        cp = np.zeros((self.batch_size, self.hidden_size))
         for i in range(self.times):
             x = X[:, i].reshape(-1, 1)
             self.lstmcell[i].forward(x, hp, cp, self.W, self.U, self.bh)
